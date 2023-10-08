@@ -29,5 +29,5 @@ For the cooldown it's the time between command usage **NOT FOR ONE USER** for al
 
 ## Owner ID
 
-Here you can put your discord id for the bot to be able to use "say",
-you can type anything and bot will say it for example "say /gc Hi!"
+Here you can put your discord id for the bot to be able to use "sudo",
+you can type anything and bot will say it for example "sudo /gc Hi!"
