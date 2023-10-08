@@ -38,8 +38,8 @@ The config folder is where you will put all information that is unique to your a
 The fields are as follows:
 | Field | Description |
 | ----- | ----------- |
-| token | The token of your Discord Bot |
-| email | The email of the MineCraft account you want to use |
+| token | The token of your Discord Bot, found in the developer portal. |
+| email | The email of the MineCraft account you want to use. |
 | password | The password of the MineCraft account you want to use |
 | auth | The authentication method of the MineCraft account you want to use (microsoft or mojang) |
 | webhookid | The webhook id. Found under "id" when following the webhook link.  |
