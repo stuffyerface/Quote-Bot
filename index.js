@@ -36,7 +36,7 @@ bot.on("message", message => {
 
   function getAuthor(msg) {
     prefixes = msg.split(" ")
-    if (prefixes[-1].includes("[")) {
+    if (prefixes[-1][-1] == "]") {
       return prefixes[-2]
     }else{
       return prefixes[-1]
