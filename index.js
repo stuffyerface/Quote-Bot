@@ -19,8 +19,8 @@ var options = {
 
 var bot = mineflayer.createBot(options);
 
-bot.on('kicked', console.log("**kicked from server**"))
-bot.on('error', console.log("**error with mineflayer bot**"))
+bot.on('kicked', console.log)
+bot.on('error', console.log)
 
 const event_files = ["chatbridge"]
 const client_files = ["chatbridge", "sudo"]
