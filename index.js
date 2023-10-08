@@ -45,7 +45,7 @@ bot.on("message", message => {
   }
 
   text = message + ``
-  parts = text.split(": ")
+  parts = text.split(": ", 2)
   author = getAuthor(parts[0])
   if(author == bot.username) return;
   messageContent = parts[1]
