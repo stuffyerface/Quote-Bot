@@ -1,33 +1,53 @@
-## Quote Bridge Bot
+## Bridge Bot
 
-This is a fork from [MX1D's Guild Bot](https://github.com/MX1D/Guild-Bot). Frag Bot features and Database connections have been stripped, amongst other things. There is a lot that has been changes, and a lot that will be changed.
+This is a template for a very basic Hypixel Guild Bridge based on [MX1D's Guild Bot](https://github.com/MX1D/Guild-Bot). Skyblock features, commands, redundancies, and other clunkiness has been removed. !DISCLAIMER: This bot uses [mineflayer](https://www.npmjs.com/package/mineflayer), which is a modified version of MineCraft that allows you to run a client without graphics. This is use at your own risk.
 
-# DISCLAIMER
+## Requirements
+- A MineCraft Account in the guild you want to bridge (I recommend not using an account you care about)
+- A Discord Bot Application - [Instructions](https://discordjs.guide/preparations/setting-up-a-bot-application.html#creating-your-bot)
+- A Webhook in the channel you want to bridge - [Instructions](https://support.discord.com/hc/en-us/articles/228383668-Intro-to-Webhooks)
+- A computer to run the bot on
 
-This bot uses [mineflayer](https://www.npmjs.com/package/mineflayer), use at your own risk.
 
-## Token
+## Instructions for use
+1. Create a Discord Bot and invite it to your server
+2. Make a Webhook in the channel you want to bridge
+3. Clone this repository to a preferred location on your computer
+4. Populate the config.json file with your information (see below)
+5. Open a terminal in the directory you cloned the repository to
+6. Run `npm install` to install dependencies
+7. Run `node index.js` to start the bot
 
-Firstly we have **Token** this is your Discord bot token
-if you didn't make a bot yet make one at [Discord Developers Site](https://discord.com/developers/applications)
-Then copy the token and paste it in the config file
+## Config
+The config folder is where you will put all information that is unique to your account, guild, and server. The config.json file is where you will put all of your information. The config.json file should look like this:
 
-## Email and Password
+```json
+{
+    "token": "",
+    "email": "",
+    "password": "",
+    "auth": "microsoft",
+    "webhookid": "",
+    "webhooktoken": "",
+    "chatchannel": "",
+    "cooldown": "",
+    "ownerID": "",
+    "subID": ""
+}
+```
+The fields are as follows:
+| Field | Description |
+| ----- | ----------- |
+| token | The token of your Discord Bot |
+| email | The email of the MineCraft account you want to use |
+| password | The password of the MineCraft account you want to use |
+| auth | The authentication method of the MineCraft account you want to use (microsoft or mojang) |
+| webhookid | The ID of the Webhook you want to use |
+| webhooktoken | The token of the Webhook you want to use |
+| chatchannel | The ID of the Discord channel you want to bridge |
+| cooldown | The cooldown between messages in milliseconds (1000 = 1 second) |
+| ownerID | The ID of the Discord user you want to be able to use commands |
+| subID | The ID of the Discord user you want to be able to use commands |
 
-Second thing we have **Email** and **Password** Those are your minecraft account details and put the auth to either mojang or microsoft depending on your account type
-
-## Webhook
-
-Now you need to create a **Webhook** in the channel you want the chat bridge to be
-Simply go to the channel settings > Intgrations and create a webhook with any name you want
-Then copy the webhook URL and go to that link, You will find webhook id and token there
-copy each one of them and put them in the config file
-
-## Cooldown
-
-For the cooldown it's the time between command usage **NOT FOR ONE USER** for all users so it's less spammy in the guild chat if so many people use the bot at the same time if you don't want a cooldown put a 0 there but if you do put any number in seconds i use 3 in my bot
-
-## Owner ID
-
-Here you can put your discord id for the bot to be able to use "sudo",
-you can type anything and bot will say it for example "sudo /gc Hi!"
+## License
+[MIT](https://choosealicense.com/licenses/mit/)
