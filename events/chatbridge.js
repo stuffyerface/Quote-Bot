@@ -40,7 +40,6 @@ module.exports = {
                           if(text.startsWith("Guild >")){
                             sendDCMsg(author, bot, text)
             }
-                 
           });
     }
 }
