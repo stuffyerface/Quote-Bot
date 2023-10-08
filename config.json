@@ -1,13 +1,10 @@
 {
-    "prefix": "",
     "token": "",
     "email": "",
     "password": "",
 	"auth": "microsoft",
-    "guildname": "Quote",
     "webhookid": "",
     "webhooktoken": "",
-    "logchannelid": "",
     "chatchannel": "",
     "cooldown": "",
     "ownerID": "",
