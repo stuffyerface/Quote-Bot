@@ -14,7 +14,8 @@ var options = {
   password: config.password,
   version: "1.8",
   colorsEnabled: false,
-  auth: config.auth
+  auth: config.auth,
+  chatLengthLimit: 256
 };
 
 var bot = mineflayer.createBot(options);
