@@ -45,10 +45,10 @@ bot.on("message", message => {
   }
 
   text = message + ``
-  parts = text.split(": ", 2)
+  parts = text.split(": ")
   author = getAuthor(parts[0])
   if(author == bot.username) return;
-  messageContent = parts[1]
+  messageContent = parts.slice(1).join(": ")
 
   event_files.forEach(event => {
     const torun = require("./events/" + event + '.js')
