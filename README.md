@@ -42,12 +42,12 @@ The fields are as follows:
 | email | The email of the MineCraft account you want to use |
 | password | The password of the MineCraft account you want to use |
 | auth | The authentication method of the MineCraft account you want to use (microsoft or mojang) |
-| webhookid | The ID of the Webhook you want to use |
-| webhooktoken | The token of the Webhook you want to use |
-| chatchannel | The ID of the Discord channel you want to bridge |
-| cooldown | The cooldown between messages in milliseconds (1000 = 1 second) |
-| ownerID | The ID of the Discord user you want to be able to use commands |
-| subID | The ID of the Discord user you want to be able to use commands |
+| webhookid | The webhook id. Found under "id" when following the webhook link.  |
+| webhooktoken | The webhook token. Found under "token" when following the webhook link. |
+| chatchannel | The channel id. Found under "channel_id" when following the webhook link. |
+| cooldown | The cooldown between messages, leave empty for 0 |
+| ownerID | ID for a Discord user with permission to `sudo` |
+| subID | Alternate ID for a Discord user with permission to `sudo` |
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
