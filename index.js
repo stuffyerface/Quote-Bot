@@ -26,8 +26,8 @@ const event_files = ["chatbridge"]
 const client_files = ["chatbridge", "sudo"]
 
 bot.on("message", message => {
-  const msg = message.toString()
-  console.log(message)
+  const msg = `` + message
+  console.log(msg)
   if (!msg.startsWith("Guild >")) return;
   if (msg.endsWith("left.") || msg.endsWith("joined.")){
     // TODO: Add guild join/leave messages
