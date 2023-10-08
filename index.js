@@ -19,13 +19,14 @@ var options = {
 
 var bot = mineflayer.createBot(options);
 
-bot.on('kicked', console.log)
+bot.on('kicked', console.log) // THIS DOES NOT WORK IDK WHY???
 bot.on('error', console.log)
 
 const event_files = ["chatbridge"]
 const client_files = ["chatbridge", "sudo"]
 
 bot.on("message", message => {
+  const msg = message.toString()
   console.log(message)
   if (!msg.startsWith("Guild >")) return;
   if (msg.endsWith("left.") || msg.endsWith("joined.")){
