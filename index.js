@@ -20,7 +20,14 @@ var options = {
 
 var bot = mineflayer.createBot(options);
 
-bot.on('kicked', console.log) // THIS DOES NOT WORK IDK WHY???
+bot.on('kicked', reason => {
+  console.log(reason)
+  client.channels.cache.get(config.channelID).send(`Bot kicked offline, check logs.`)
+  setTimeout(() => {
+    console.log("Attempting to reconnect.")
+    bot = mineflayer.createBot(options);
+  }, 10000);
+})
 bot.on('error', console.log)
 
 const event_files = ["chatbridge"]
@@ -62,6 +69,7 @@ bot.on("message", message => {
 
 bot.once("login", () => {
   console.log(`Mineflayer logged in as ${bot.username}, version: ${bot.version}`)
+  client.channels.cache.get(config.channelID).send(`Bot logged in as ${bot.username}.`)
 })
 
 
@@ -75,6 +83,16 @@ client.on("message", message => {
 
 client.once("ready", () => {
   console.log('Discord Client Ready')
+  client.user.setActivity("Hypixel", { type: "PLAYING" })
+  client.user.setStatus("online")
 })
 
 client.login(config.token);
+
+process.on('SIGINT', () => {
+  console.log("Shutting down...")
+  client.channels.cache.get(config.channelID).send(`${bot.username} logging out.`)
+  bot.quit()
+  client.destroy()
+  process.exit(0)
+})
