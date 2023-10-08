@@ -19,31 +19,38 @@ var options = {
 
 var bot = mineflayer.createBot(options);
 
-bot.on('kicked', console.log)
-bot.on('error', console.log)
+bot.on('kicked', console.log("**kicked from server**"))
+bot.on('error', console.log("**error with mineflayer bot**"))
 
-const event_files = ["chatbridge", "consolelogs"]
+const event_files = ["chatbridge"]
 const client_files = ["chatbridge", "sudo"]
 
 bot.on("message", message => {
+  console.log(message)
+  if (!msg.startsWith("Guild >")) return;
+  if (msg.endsWith("left.") || msg.endsWith("joined.")){
+    // TODO: Add guild join/leave messages
+    return;
+  }
 
-  function authorFunction(msg) {
-    const args = msg.split(/ +/)
-    if (!msg.startsWith("Guild >") || msg.endsWith("left.") || msg.endsWith("joined.")) return;
-    if (!args[2].includes("[")) {
-      return args[2]
-    }
-    if (args[2].includes("[")) {
-      return args[3]
+  function getAuthor(msg) {
+    prefixes = msg.split(" ")
+    if (prefixes[-1].includes("[")) {
+      return prefixes[-2]
+    }else{
+      return prefixes[-1]
     }
   }
 
-  const text = message + ``
-  const author = authorFunction(text)
+  text = message + ``
+  parts = text.split(": ")
+  author = getAuthor(parts[0])
+  if(author == bot.username) return;
+  messageContent = parts[1]
 
   event_files.forEach(event => {
     const torun = require("./events/" + event + '.js')
-    torun.excute(bot, text, client, author)
+    torun.excute(bot, messageContent, client, author)
   });
 })
 
@@ -51,7 +58,7 @@ bot.on("message", message => {
 
 
 bot.once("login", () => {
-  console.log(`Logged in as ${bot.username}, version: ${bot.version}`)
+  console.log(`Mineflayer logged in as ${bot.username}, version: ${bot.version}`)
 })
 
 
@@ -64,7 +71,7 @@ client.on("message", message => {
 })
 
 client.once("ready", () => {
-  console.log('ready')
+  console.log('Discord Client Ready')
 })
 
 client.login(config.token);
