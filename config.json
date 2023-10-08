@@ -2,7 +2,7 @@
     "token": "",
     "email": "",
     "password": "",
-	"auth": "microsoft",
+    "auth": "microsoft",
     "webhookid": "",
     "webhooktoken": "",
     "chatchannel": "",
