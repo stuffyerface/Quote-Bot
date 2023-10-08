@@ -36,10 +36,11 @@ bot.on("message", message => {
 
   function getAuthor(msg) {
     prefixes = msg.split(" ")
-    if (prefixes[-1].endsWith("]")) {
-      return prefixes[-2]
+    prelen = prefixes.length
+    if (prefixes[prelen-1].endsWith("]")) {
+      return prefixes[prelen-2]
     }else{
-      return prefixes[-1]
+      return prefixes[prelen-1]
     }
   }
 
