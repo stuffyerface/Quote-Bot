@@ -68,6 +68,7 @@ bot.on("message", message => {
 bot.once("login", () => {
   console.log(`Mineflayer logged in as ${bot.username}, version: ${bot.version}`)
   client.channels.cache.get(config.chatchannel).send({ content: `${bot.username} logged in.` })
+  bot.chat("§")
 })
 
 
