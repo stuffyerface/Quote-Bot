@@ -1,46 +1,51 @@
 const config = require("../config.json")
 module.exports = {
-  excute(client, text, bot, message) {
+  async execute(client, text, bot, message) {
     if (message.author.bot) return;
     if (text.startsWith('sudo')) return;
-    if (message.channel.id === config.channelID) {
+    if (message.channel.id === config.chatchannel) {
       displayName = message.member.displayName
-      const attachments = (message.attachments).array();
-      
       // Check if message is a reply
-      if(message.reference) {
+      if (message.reference) {
         const repliedMessage = message.channel.messages.cache.get(message.reference.messageID);
-        if(repliedMessage) {
+        if (repliedMessage) {
           repliedUser = repliedMessage.member.displayName
-          
-        }else{
+
+        } else {
           repliedUser = "Unknown"
         }
         command = `/gc ${displayName} replying to ${repliedUser}: ${text}`
-      }else{
+      } else {
         command = `/gc ${displayName}: ${text}`
       }
+      console.log(`Before: ${command}`)
+      command = command.replaceAll("\n", " ") // Remove newlines
+      command = command.replace(/<:([^:]+):\d+>/g, ":$1:") // Remove custom emojis 
 
-      command.replace("\n", " ") // Remove newlines
-      command.replace(/<:([^:]+):\d+>/g, "$1") // Remove custom emojis
-      command.replace(/<@(\d+)>/g, client.users.cache.get("@$1").username) // Replace user mentions with usernames
+      command = command.replace(/<@(\d+)>/g, (match, id) => `@${client.users.cache.get(id).globalName}`) // Replace user mentions with usernames
+      command = command.replace(/<#(\d+)>/g, (match, id) => `#${client.channels.cache.get(id).name}`) // Replace channel mentions with channel names
+      // command = command.replace(/<@&(\d+)>/g, (match, id) => `@${client.roles.cache.get(id).name}`) // Replace role mentions with role names DOES NOT WORK
+
+
+      console.log(`After: ${command}`)
+
       if (command.length > 256) {
         command = command.slice(0, 253) + "..."
       }
       bot.chat(command)
-
       // TODO: Upload images to imgur and send link instead.
-      if (attachments.length > 0) {
-        if (nick1) {
-          setTimeout(() => {
-            bot.chat(`/gc ${nick1}: ${attachments[0].url}`)
-          }, 550);
-        } else {
-          setTimeout(() => {
-            bot.chat(`/gc ${message.author.username}: ${attachments[0].url}`)
-          }, 550)
-        }
-      }
+      // const attachments = (message.attachments).array();
+      // if (attachments.length > 0) {
+      //   if (nick1) {
+      //     setTimeout(() => {
+      //       bot.chat(`/gc ${nick1}: ${attachments[0].url}`)
+      //     }, 550);
+      //   } else {
+      //     setTimeout(() => {
+      //       bot.chat(`/gc ${message.author.username}: ${attachments[0].url}`)
+      //     }, 550)
+      //   }
+      // }
     }
   }
 }
