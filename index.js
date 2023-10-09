@@ -1,10 +1,8 @@
 require("dotenv").config()
 const mineflayer = require("mineflayer");
 const config = require("./config.json")
-const { Client, Intents } = require('discord.js');
-const myIntents = new Intents();
-myIntents.add(Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES)
-const client = new Client({ intents: [myIntents] })
+const { Client, GatewayIntentBits } = require('discord.js');
+const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent] });
 const fs = require('fs')
 const prefix = config.prefix
 
@@ -22,7 +20,7 @@ var bot = mineflayer.createBot(options);
 
 bot.on('kicked', reason => {
   console.log(reason)
-  client.channels.cache.get(config.channelID).send(`Bot kicked offline, check logs.`)
+  client.channels.cache.get(config.chatchannel).send(`Bot kicked offline, check logs.`)
   setTimeout(() => {
     console.log("Attempting to reconnect.")
     bot = mineflayer.createBot(options);
@@ -37,7 +35,7 @@ bot.on("message", message => {
   const msg = `` + message
   console.log(msg)
   if (!msg.startsWith("Guild >")) return;
-  if (msg.endsWith("left.") || msg.endsWith("joined.")){
+  if (msg.endsWith("left.") || msg.endsWith("joined.")) {
     // TODO: Add guild join/leave messages
     return;
   }
@@ -45,22 +43,22 @@ bot.on("message", message => {
   function getAuthor(msg) {
     prefixes = msg.split(" ")
     prelen = prefixes.length
-    if (prefixes[prelen-1].endsWith("]")) {
-      return prefixes[prelen-2]
-    }else{
-      return prefixes[prelen-1]
+    if (prefixes[prelen - 1].endsWith("]")) {
+      return prefixes[prelen - 2]
+    } else {
+      return prefixes[prelen - 1]
     }
   }
 
   text = message + ``
   parts = text.split(": ")
   author = getAuthor(parts[0])
-  if(author == bot.username) return;
+  if (author == bot.username) return;
   messageContent = parts.slice(1).join(": ")
 
   event_files.forEach(event => {
     const torun = require("./events/" + event + '.js')
-    torun.excute(bot, messageContent, client, author)
+    torun.execute(bot, messageContent, client, author)
   });
 })
 
@@ -69,15 +67,15 @@ bot.on("message", message => {
 
 bot.once("login", () => {
   console.log(`Mineflayer logged in as ${bot.username}, version: ${bot.version}`)
-  client.channels.cache.get(config.channelID).send(`Bot logged in as ${bot.username}.`)
+  client.channels.cache.get(config.chatchannel).send({ content: `${bot.username} logged in.` })
 })
 
 
-client.on("message", message => {
+client.on("messageCreate", message => {
   const text = message.content
   client_files.forEach(file => {
     const torun = require("./client/" + file + '.js')
-    torun.excute(client, text, bot, message)
+    torun.execute(client, text, bot, message)
   });
 })
 
@@ -89,9 +87,9 @@ client.once("ready", () => {
 
 client.login(config.token);
 
-process.on('SIGINT', () => {
+process.on('SIGINT', async () => {
   console.log("Shutting down...")
-  client.channels.cache.get(config.channelID).send(`${bot.username} logging out.`)
+  await client.channels.cache.get(config.chatchannel).send({ content: `${bot.username} logging out.` })
   bot.quit()
   client.destroy()
   process.exit(0)

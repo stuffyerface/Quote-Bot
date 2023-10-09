@@ -1,9 +1,9 @@
 module.exports = {
-  excute(bot, messageContent, client, author) {
+  execute(bot, messageContent, client, author) {
     const Discord = require("discord.js")
     const config = require("../config.json")
     if (!config.webhookid || !config.webhooktoken) return;
-    const webhookClient = new Discord.WebhookClient(config.webhookid, config.webhooktoken);
+    const webhookClient = new Discord.WebhookClient({ id: config.webhookid, token: config.webhooktoken });
     const msg = messageContent.toString()
 
     try {
