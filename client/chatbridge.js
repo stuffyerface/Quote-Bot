@@ -7,7 +7,7 @@ module.exports = {
       displayName = message.member.displayName
       // Check if message is a reply
       if (message.reference) {
-        const repliedMessage = message.channel.messages.cache.get(message.reference.messageID);
+        const repliedMessage = message.channel.messages.cache.get(message.reference.messageId);
         if (repliedMessage) {
           repliedUser = repliedMessage.member.displayName
 
