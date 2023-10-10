@@ -1,7 +1,7 @@
 require("dotenv").config()
 const mineflayer = require("mineflayer");
 const config = require("./config.json")
-const { Client, GatewayIntentBits } = require('discord.js');
+const { ActivityType, Client, GatewayIntentBits } = require('discord.js');
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent] });
 const fs = require('fs')
 const prefix = config.prefix
@@ -18,7 +18,7 @@ var options = {
 
 var bot = mineflayer.createBot(options);
 
-bot.on('kicked', reason => {
+bot.on('end', reason => {
   console.log(reason)
   client.channels.cache.get(config.chatchannel).send(`Bot kicked offline, check logs.`)
   setTimeout(() => {
@@ -26,7 +26,7 @@ bot.on('kicked', reason => {
     bot = mineflayer.createBot(options);
   }, 10000);
 })
-bot.on('error', console.log)
+bot.on('error', (err) => console.log(err))
 
 const event_files = ["chatbridge"]
 const client_files = ["chatbridge", "sudo"]
@@ -82,8 +82,7 @@ client.on("messageCreate", message => {
 
 client.once("ready", () => {
   console.log('Discord Client Ready')
-  client.user.setActivity("Hypixel", { type: "PLAYING" })
-  client.user.setStatus("online")
+  client.user.setActivity({ type: ActivityType.Custom, name: "Credits", state: "Bridge by @stuffy"})
 })
 
 client.login(config.token);
