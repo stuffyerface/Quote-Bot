@@ -19,7 +19,7 @@ module.exports = {
       } else {
         command = `/gc ${displayName}: ${text}`
       }
-      
+
       command = command.replaceAll("\n", " ") // Remove newlines
       command = command.replace(/<:([^:]+):\d+>/g, ":$1:") // Remove custom emojis 
 
@@ -30,6 +30,12 @@ module.exports = {
       if (command.length > 256) {
         command = command.slice(0, 253) + "..."
       }
+
+      // remove ez's
+      command = command.replace(/e+z+/gi, function(match){ 
+        return "*".repeat(match.length);
+      })
+
       bot.chat(command)
       // TODO: Upload images to imgur and send link instead.
       // const attachments = (message.attachments).array();
