@@ -32,7 +32,7 @@ module.exports = {
       }
 
       // remove ez's
-      command = command.replace(/e+z+/gi, function(match){ 
+      command = command.replace(/\be+z+\b/gi, function(match){ 
         return "*".repeat(match.length);
       })
 
