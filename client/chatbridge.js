@@ -8,26 +8,24 @@ module.exports = {
       // Check if message is a reply
       if (message.reference) {
         const repliedMessage = message.channel.messages.cache.get(message.reference.messageId);
-        if (repliedMessage) {
-          repliedUser = repliedMessage.member.displayName
-
-        } else {
+        if (!repliedMessage) {
           repliedUser = "Unknown"
+        } else if (repliedMessage.webhookId) {
+          repliedUser = repliedMessage.author.username
+        } else {
+          repliedUser = repliedMessage.member.displayName
         }
         command = `/gc ${displayName} replying to ${repliedUser}: ${text}`
       } else {
         command = `/gc ${displayName}: ${text}`
       }
-      console.log(`Before: ${command}`)
+      
       command = command.replaceAll("\n", " ") // Remove newlines
       command = command.replace(/<:([^:]+):\d+>/g, ":$1:") // Remove custom emojis 
 
       command = command.replace(/<@(\d+)>/g, (match, id) => `@${client.users.cache.get(id).globalName}`) // Replace user mentions with usernames
       command = command.replace(/<#(\d+)>/g, (match, id) => `#${client.channels.cache.get(id).name}`) // Replace channel mentions with channel names
       // command = command.replace(/<@&(\d+)>/g, (match, id) => `@${client.roles.cache.get(id).name}`) // Replace role mentions with role names DOES NOT WORK
-
-
-      console.log(`After: ${command}`)
 
       if (command.length > 256) {
         command = command.slice(0, 253) + "..."
