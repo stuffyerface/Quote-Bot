@@ -12,7 +12,7 @@ var options = {
   password: config.password,
   version: "1.8",
   colorsEnabled: false,
-  auth: config.auth,
+  auth: "microsoft",
   chatLengthLimit: 256
 };
 
@@ -23,7 +23,11 @@ bot.on('end', reason => {
   client.channels.cache.get(config.chatchannel).send(`Bot kicked offline, check logs.`)
   setTimeout(() => {
     console.log("Attempting to reconnect.")
-    bot = mineflayer.createBot(options);
+    try {
+      bot = mineflayer.createBot(options);
+    } catch (error) {
+      console.log("Error reconnecting: " + error)
+    }
   }, 10000);
 })
 bot.on('error', (err) => console.log(err))
@@ -36,7 +40,10 @@ bot.on("message", message => {
   console.log(msg)
   if (!msg.startsWith("Guild >")) return;
   if (msg.endsWith("left.") || msg.endsWith("joined.")) {
-    // TODO: Add guild join/leave messages
+    player = msg.split(" ")[2]
+    // check if player is on blacklist from config
+    if (config.namesToIgnore.includes(player)) return;
+    client.channels.cache.get(config.chatchannel).send({ content: `**${player}** ${msg.split(" ")[3]}` })
     return;
   }
 
