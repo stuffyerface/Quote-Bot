@@ -10,8 +10,9 @@
     "cooldown": "",
     "ownerID": "",
     "subID": "",
+    "sendjoinleavemessages": "false",
     "namesToIgnore": [
-        "Stuffy",
-        "Stuffiness"
+        "sampleName1",
+        "sampleName2"
     ] 
 }

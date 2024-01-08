@@ -41,7 +41,7 @@ bot.on("message", message => {
   if (!msg.startsWith("Guild >")) return;
   if (msg.endsWith("left.") || msg.endsWith("joined.")) {
     player = msg.split(" ")[2]
-    // check if player is on blacklist from config
+    if(!config.sendjoinleavemessages) return;
     if (config.namesToIgnore.includes(player)) return;
     client.channels.cache.get(config.chatchannel).send({ content: `**${player}** ${msg.split(" ")[3]}` })
     return;
