@@ -20,7 +20,7 @@ var bot = mineflayer.createBot(options);
 
 bot.on('end', reason => {
   console.log(reason)
-  client.channels.cache.get(config.chatchannel).send(`Bot kicked offline, check logs.`)
+  client.channels.cache.get(config.chatchannel).send(config.kickmessage)
   setTimeout(() => {
     console.log("Attempting to reconnect.")
     try {
