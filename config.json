@@ -14,5 +14,6 @@
     "namesToIgnore": [
         "sampleName1",
         "sampleName2"
-    ] 
+    ],
+    "kickmessage": "Bot kicked offline, check logs."
 }
