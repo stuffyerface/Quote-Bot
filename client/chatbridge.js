@@ -16,6 +16,7 @@ module.exports = {
         } else {
           repliedUser = repliedMessage.member.displayName
         }
+        repliedUser = repliedUser.slice(0,15)
         prefix = `${displayName} replying to ${repliedUser}: `
       } else {
         prefix = `${displayName}: `
