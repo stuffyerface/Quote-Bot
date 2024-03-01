@@ -4,12 +4,12 @@ const config = require("./config.json")
 const { ActivityType, Client, GatewayIntentBits } = require('discord.js');
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent] });
 const fs = require('fs')
-const prefix = config.prefix
+require ('dotenv').config()
 
 var options = {
-  host: "hypixel.net",
-  username: config.email,
-  password: config.password,
+  host: config.serverip,
+  username: process.env.MC_EMAIL,
+  //password: process.env.MC_PASSWORD,
   version: "1.8",
   colorsEnabled: false,
   auth: "microsoft",
@@ -92,7 +92,7 @@ client.once("ready", () => {
   client.user.setActivity({ type: ActivityType.Custom, name: "Credits", state: "Bridge by @stuffy"})
 })
 
-client.login(config.token);
+client.login(process.env.DISCORD_TOKEN);
 
 process.on('SIGINT', async () => {
   console.log("Shutting down...")
