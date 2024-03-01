@@ -3,15 +3,10 @@ module.exports = {
     const Discord = require("discord.js")
     const config = require("../config.json")
     require("dotenv").config()
-    try{
-      const webhookUrl = process.env.WEBHOOK_URL;
-      const regex = /\/webhooks\/(\d+)\/([\w-]+)/;
-      const [, id, token] = webhookUrl.match(regex);
-      const webhookClient = new Discord.WebhookClient({ id, token });
-    } catch (error) {
-      console.log("Improper Webhook setup")
-      return
-    }
+    const webhookUrl = process.env.WEBHOOK_URL;
+    const regex = /\/webhooks\/(\d+)\/([\w-]+)/;
+    const [, id, token] = webhookUrl.match(regex);
+    const webhookClient = new Discord.WebhookClient({ id, token });
     const msg = messageContent.toString()
 
     try {
