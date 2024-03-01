@@ -1,16 +1,7 @@
 {
-    "token": "",
-    "email": "",
-    "password": "",
-	"auth": "",
-    "guildname": "",
-    "webhookid": "",
-    "webhooktoken": "",
+    "serverip": "hypixel.net",
     "chatchannel": "",
-    "cooldown": "",
-    "ownerID": "",
-    "subID": "",
-    "sendjoinleavemessages": "false",
+    "sendjoinleavemessages": false,
     "namesToIgnore": [
         "sampleName1",
         "sampleName2"
