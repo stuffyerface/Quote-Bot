@@ -9,6 +9,19 @@ module.exports = {
     const webhookClient = new Discord.WebhookClient({ id, token });
     const msg = messageContent.toString()
 
+    let words = msg.split(" ")
+    let modified = false
+    for (let i = 0; i < words.length; i++) {
+      if (words[i].startsWith("l$")) {
+        words[i] = stufDecode(words[i])
+        modified = true
+      }
+    }
+
+    if(modified){
+      msg = words.join(" ")
+    }
+
     try {
       webhookClient.send({
         username: `${author}`,

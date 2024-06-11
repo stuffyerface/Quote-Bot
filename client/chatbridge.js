@@ -1,14 +1,18 @@
 const config = require("../config.json")
+import { stufEncode } from "../utils";
+
 module.exports = {
   async execute(client, text, bot, message) {
     if (message.author.bot) return;
     if (text.startsWith('sudo')) return;
     if (message.channel.id === config.chatchannel) {
-      displayName = message.member.displayName
+      let displayName = message.member.displayName
       displayName = displayName.slice(0,15)
       // Check if message is a reply
+      let prefix
       if (message.reference) {
         const repliedMessage = message.channel.messages.cache.get(message.reference.messageId);
+        let repliedUser
         if (!repliedMessage) {
           repliedUser = "Unknown"
         } else if (repliedMessage.webhookId) {
@@ -21,7 +25,7 @@ module.exports = {
       } else {
         prefix = `${displayName}: `
       }
-
+      let text
       text = text.replaceAll("\n", " ") // Remove newlines
       text = text.replace(/<:([^:]+):\d+>/g, ":$1:") // Remove custom emojis 
 
@@ -36,7 +40,21 @@ module.exports = {
         return "*".repeat(match.length); // Censor "ip"
       })
 
-      command = `/gc ` + prefix + text
+      let words = text.split(" ")
+      let modified = false
+
+      for (let i = 0; i < words.length; i++) {
+        if (words[i].startsWith("http")) {
+          words[i] = stufEncode(words[i])
+          modified = true
+        }
+      }
+
+      if (modified) {
+        text = words.join(" ")
+      }
+
+      let command = `/gc ` + prefix + text
 
       if (command.length > 256) {
         command = command.slice(0, 253) + "..."
