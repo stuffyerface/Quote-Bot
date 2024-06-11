@@ -1,5 +1,5 @@
 const config = require("../config.json")
-import { stufEncode } from "../utils";
+const utils = require("../utils.js")
 
 module.exports = {
   async execute(client, text, bot, message) {
@@ -45,7 +45,7 @@ module.exports = {
 
       for (let i = 0; i < words.length; i++) {
         if (words[i].startsWith("http")) {
-          words[i] = stufEncode(words[i])
+          words[i] = utils.stufEncode(words[i])
           modified = true
         }
       }

@@ -1,3 +1,4 @@
+const utils = require("../utils.js")
 module.exports = {
   execute(bot, messageContent, client, author) {
     const Discord = require("discord.js")
@@ -13,7 +14,7 @@ module.exports = {
     let modified = false
     for (let i = 0; i < words.length; i++) {
       if (words[i].startsWith("l$")) {
-        words[i] = stufDecode(words[i])
+        words[i] = utils.stufDecode(words[i])
         modified = true
       }
     }
