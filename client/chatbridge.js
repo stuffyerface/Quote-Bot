@@ -25,7 +25,6 @@ module.exports = {
       } else {
         prefix = `${displayName}: `
       }
-      let text
       text = text.replaceAll("\n", " ") // Remove newlines
       text = text.replace(/<:([^:]+):\d+>/g, ":$1:") // Remove custom emojis 
 

@@ -4,7 +4,7 @@
 // Info and licenses:
 // github.com/stuffyerface/STuF
 
-export function stufDecode(encoded) {
+function stufDecode(encoded) {
   if (!encoded.startsWith('l$')) {
     throw new Error('Invalid encoded string');
   }
@@ -42,7 +42,7 @@ export function stufDecode(encoded) {
   return url;
 }
 
-export function stufEncode(url) {
+function stufEncode(url) {
   let encoded = "l$"
   if (url.startsWith('http://')) {
     encoded += 'h';
@@ -104,3 +104,5 @@ function charInc(str, int) {
   }
   return incrementedStr;
 }
+
+module.exports = { stufDecode, stufEncode}
