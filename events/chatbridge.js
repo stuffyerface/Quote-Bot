@@ -8,7 +8,7 @@ module.exports = {
     const regex = /\/webhooks\/(\d+)\/([\w-]+)/;
     const [, id, token] = webhookUrl.match(regex);
     const webhookClient = new Discord.WebhookClient({ id, token });
-    const msg = messageContent.toString()
+    let msg = messageContent.toString()
 
     let words = msg.split(" ")
     let modified = false
