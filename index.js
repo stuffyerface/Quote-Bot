@@ -1,9 +1,12 @@
 require("dotenv").config()
 const mineflayer = require("mineflayer");
 const config = require("./config.json")
-const { ActivityType, Client, GatewayIntentBits } = require('discord.js');
+const { ActivityType, Client, GatewayIntentBits, Collection, Events, REST, Routes, EmbedBuilder } = require('discord.js');
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent] });
 const fs = require('fs')
+const path = require('path')
+const commandPath = fs.readdirSync(path.join(__dirname, 'commands'));
+
 require ('dotenv').config()
 
 var options = {
@@ -73,8 +76,9 @@ bot.on("message", message => {
 
 
 bot.once("login", () => {
-  console.log(`Mineflayer logged in as ${bot.username}, version: ${bot.version}`)
-  client.channels.cache.get(config.chatchannel).send({ content: `${bot.username} logged in.` })
+  username = bot.username
+  console.log(`Mineflayer logged in as ${username}, version: ${bot.version}`)
+  client.channels.cache.get(config.chatchannel).send({ content: `${username} logged in.` })
   bot.chat("§")
 })
 
@@ -85,6 +89,34 @@ client.on("messageCreate", message => {
     const torun = require("./client/" + file + '.js')
     torun.execute(client, text, bot, message)
   });
+})
+
+const errorEmbed = new EmbedBuilder()
+  .setColor(0xf0554a)
+  .setTitle('Slash Command Error')
+  .setFooter({ text: 'Bridge bot by @stuffy'})
+  .setDescription('This interaction failed. Please Try again.')
+
+client.on(Events.InteractionCreate, async interaction => {
+  if(!interaction.isChatInputCommand()) return;
+
+  const command = interaction.client.commands.get(interaction.commandName);
+
+  if(!command) {
+    console.error(`No command matching ${interaction.commandName} was found.`);
+    return;
+  }
+
+  try {
+    await command.execute(interaction, bot)
+  } catch(error) {
+    console.error(error);
+    if (interaction.replied || interaction.deterred) {
+      await interaction.editReply({ embeds: [errorEmbed], ephemeral: true});
+    } else {
+      await interaction.reply({ embeds: [errorEmbed], ephemeral: true});
+    }
+  }
 })
 
 client.once("ready", () => {
@@ -101,3 +133,33 @@ process.on('SIGINT', async () => {
   client.destroy()
   process.exit(0)
 })
+
+client.commands = new Collection();
+const commands = [];
+
+for (const file of commandPath){
+  const command = require(`./commands/${file}`);
+  if('data' in command && 'execute' in command){
+    client.commands.set(command.data.name, command)
+    commands.push(command.data.toJSON())
+  } else {
+    console.log(`[WARNING] The command at ${command} is missing a required field.`)
+  }
+}
+
+const rest = new REST().setToken(process.env.DISCORD_TOKEN);
+
+(async () => {
+  try {
+    console.log(`Started refreshing ${commands.length} slash commands.`)
+    
+    const data = await rest.put(
+      Routes.applicationGuildCommands("1250552764426096753", "795108903733952562"),
+      { body: commands}
+    )
+
+    console.log (`Successfully reloaded ${data.length} slash commands.`)
+  } catch (error) {
+    console.error(error)
+  }
+})();
