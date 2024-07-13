@@ -2,6 +2,7 @@
     "serverip": "hypixel.net",
     "chatchannel": "",
     "homeguild": "",
+    "botid": "",
     "sendjoinleavemessages": false,
     "namesToIgnore": [
         "sampleName1",
