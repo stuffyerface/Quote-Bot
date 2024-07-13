@@ -1,6 +1,7 @@
 {
     "serverip": "hypixel.net",
     "chatchannel": "",
+    "homeguild": "",
     "sendjoinleavemessages": false,
     "namesToIgnore": [
         "sampleName1",
