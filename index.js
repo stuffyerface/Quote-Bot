@@ -84,12 +84,12 @@ function createBot() {
 
 
 
-  bot.once("spawn", () => {
+  bot.once("login", async () => {
     username = bot.username
     console.log(`Mineflayer logged in as ${username}, version: ${bot.version}`)
     bot.online = true
     client.user.setStatus("online")
-    client.channels.cache.get(config.chatchannel).send({ content: `${username} logged in.` })
+    await client.channels.cache.get(config.chatchannel).send({ content: `${username} logged in.` })
     bot.chat("§")
   })
 
