@@ -6,9 +6,9 @@ module.exports = {
     .setDescription('Checks if the bot is working.'),
   async execute(interaction, bot) {
     if(bot.online){
-      await interaction.reply({content: "Bot Alive, unfortunateLy", ephemeral: true})
+      await interaction.reply({content: "Bot Online since " + bot.timestamp, ephemeral: true})
     } else {
-      await interaction.reply({content: "Bot Dead L", ephemeral: true})
+      await interaction.reply({content: "Bot Offline since " + bot.timestamp, ephemeral: true})
     }
   }
 } 

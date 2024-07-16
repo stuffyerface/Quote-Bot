@@ -28,6 +28,7 @@ function createBot() {
     console.log(reason)
     bot.end()
     bot.online = false
+    bot.timestamp = getTime()
     client.user.setStatus("dnd")
     
     setTimeout(() => {
@@ -88,6 +89,7 @@ function createBot() {
     username = bot.username
     console.log(`Mineflayer logged in as ${username}, version: ${bot.version}`)
     bot.online = true
+    bot.timestamp = getTime()
     client.user.setStatus("online")
     await client.channels.cache.get(config.chatchannel).send({ content: `${username} logged in.` })
     bot.chat("§")
@@ -185,4 +187,9 @@ function createBot() {
       console.error(error)
     }
   })();
+}
+
+function getTime() {
+  timestamp = Math.floor(Date.now()/1000)
+  return "<t:" + timestamp + ":R>"
 }
