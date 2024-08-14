@@ -92,7 +92,7 @@ function createBot() {
     bot.timestamp = getTime()
     client.user.setStatus("online")
     await client.channels.cache.get(config.chatchannel).send({ content: `${username} logged in.` })
-    bot.chat("§")
+    bot.chat("/limbo")
   })
 
 
