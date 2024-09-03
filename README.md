@@ -1,6 +1,9 @@
 ## Bridge Bot
 
-This is a template for a very basic Hypixel Guild Bridge based on [MX1D's Guild Bot](https://github.com/MX1D/Guild-Bot). Skyblock features, commands, redundancies, and other clunkiness has been removed. !DISCLAIMER: This bot uses [mineflayer](https://www.npmjs.com/package/mineflayer), which is a modified version of MineCraft that allows you to run a client without graphics. This is use at your own risk.
+A program to host a connection between a Channel inside of discord, and a Guild Chat in game on Hypixel.
+
+> [!WARNING]
+> This bot uses [mineflayer](https://www.npmjs.com/package/mineflayer), which is a modified version of MineCraft that allows you to run a client without graphics. Modified MineCraft clients may be against server rules, so this software is use at your own risk.
 
 ## Requirements
 - A MineCraft Account in the guild you want to bridge (I recommend not using an account you care about)
@@ -19,35 +22,62 @@ This is a template for a very basic Hypixel Guild Bridge based on [MX1D's Guild 
 7. Run `node index.js` to start the bot
 
 ## Config
+
+> [!NOTE]
+> When updating between release versions, be sure to copy over your config
+
 The config folder is where you will put all information that is unique to your account, guild, and server. The config.json file is where you will put all of your information. The config.json file should look like this:
 
 ```json
 {
-    "token": "",
-    "email": "",
-    "password": "",
-    "auth": "microsoft",
-    "webhookid": "",
-    "webhooktoken": "",
+    "serverip": "",
     "chatchannel": "",
-    "cooldown": "",
-    "ownerID": "",
-    "subID": ""
+    "homeguild": "",
+    "botid": "",
+    "sendjoinleavemessages": false,
+    "namesToIgnore": [
+        "sampleName1",
+        "sampleName2"
+    ],
+    "kickmessage": "Bot kicked offline, check logs."
 }
 ```
 The fields are as follows:
 | Field | Description |
 | ----- | ----------- |
-| token | The token of your Discord Bot, found in the developer portal. |
-| email | The email of the MineCraft account you want to use. |
-| password | The password of the MineCraft account you want to use |
-| auth | The authentication method of the MineCraft account you want to use (microsoft or mojang) |
-| webhookid | The webhook id. Found under "id" when following the webhook link.  |
-| webhooktoken | The webhook token. Found under "token" when following the webhook link. |
+| serverip | The address of the Minecraft server to connect to. For these purposes: `hypixel.net`|
 | chatchannel | The channel id. Found under "channel_id" when following the webhook link. |
-| cooldown | The cooldown between messages, leave empty for 0 |
-| ownerID | ID for a Discord user with permission to `sudo` |
-| subID | Alternate ID for a Discord user with permission to `sudo` |
+| homeguild | The id of your bot's home guild. For slash commands.|
+| botid | The id of your bot. For slash commands.|
+| sendjoinleavemessages | `True` to send a message when guild members join/leave, `False` to not. |
+| namesToIgnore | A list of usernames you don't wish to be sent when they join or leave |
+| kickmessage | The message to send in the bridge channel when the bot detects itself going offline. |
+
+> [!TIP]
+> You can use tags in your `kickmessage` to mention users or roles, like `<@discordUserId>` or `<@&discordRoleId>`
+
+## Environment Variables
+
+> [!WARNING]
+> Environment Variables are meant to remain private. Do not share these with anyone.
+
+```.env
+# Your .env file contains sensitive information. Do not share it with anyone.
+DISCORD_TOKEN=""
+WEBHOOK_URL="https://discord.com/api/webhooks/<channelID>/<webhookToken>"
+
+# Minecraft Credentials
+MC_EMAIL=""
+MC_PASSWORD=""
+
+```
+The fields are as follows:
+| Field | Description |
+| ----- | ----------- |
+| DISCORD_TOKEN | The token of your Discord Bot, found in the developer portal. |
+| MC_EMAIL | The email of the MineCraft account you want to use. |
+| MC_PASSWORD | The password of the MineCraft account you want to use, often not needed. |
+| WEBHOOK_URL | The webhook link. Should be given to you upon webhook creation. |
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
